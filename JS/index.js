@@ -29,7 +29,7 @@ const loadPhone = async (searchText, isShowAll) => {
                 <h2 class="card-title">${phone.phone_name}</h2>
                 <p>${phone.slug}</p>
                 <div class="card-actions justify-center">
-                    <button onclick="handleshowDetail('${phone.slug}')" class="btn btn-primary">Show Details</button>
+                    <button onclick="handleshowDetail('${phone.slug}');show_detail_modal.showModal()" class="btn btn-primary">Show Details</button>
                 </div>
             </div>
         </div>
@@ -41,11 +41,22 @@ const loadPhone = async (searchText, isShowAll) => {
 
 //Details Button
 const handleshowDetail = async (id) => {
-        // console.log("Id is : ",id)
-        const response = await fetch(` https://openapi.programming-hero.com/api/phone/${id}`)
-        const data = await response.json();
-        let info = data.data;
-        console.log(info)
+    // console.log("Id is : ",id)
+    const response = await fetch(` https://openapi.programming-hero.com/api/phone/${id}`)
+    const data = await response.json();
+    let info = data.data;
+    console.log(info)
+
+    const PhoneName = document.getElementById('detail-phone-name')
+    PhoneName.innerText = info.name;
+
+    const DetailContainer = document.getElementById('show-detail-container')
+    DetailContainer.innerHTML = `
+    <img src="${info.image}" alt=""/>
+    <p><span class="font-bold">Storage : </span>${info?.mainFeatures?.storage}</p>
+    <p>Chipset : ${info.mainFeatures.chipSet}</p>
+    `
+}
 
 // Details button (Another way)
 
